@@ -1,10 +1,10 @@
 pipeline {
-    agents any
-    tools{
+    agent any
+    tools {
         maven 'maven3'
     }
-    stages{
-        stage('Build'){
+    stages {
+        stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
@@ -15,11 +15,10 @@ pipeline {
                 }
             }
         }
-
-        stage ('Deploy to a tomcat server'){
+        stage('Deploy to Tomcat Server') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'a2cd7e7c-1d54-430b-bd91-b2f740bf932d', path: '', url: 'http://localhost:8080/')], contextPath: null, war: '**/*.war'
-                    }
-                }
+                deploy adapters: [tomcat9(credentialsId: 'a2cd7e7c-1d54-430b-bd91-b2f740bf932d', path: '', url: 'http://localhost:8080/')], contextPath: null, war: '**/target/*.war'
             }
         }
+    }
+}
